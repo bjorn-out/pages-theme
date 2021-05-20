@@ -5,29 +5,49 @@
     </a>
     <hr>
 
+    <nav style="display: none;">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            {% assign i = 0 %}
+            {% for module in site.data.schedule %}
+                <button class="nav-link" id="nav-{{ i }}-tab" data-bs-toggle="tab" data-bs-target="#nav-{{ i }}" type="button" role="tab" aria-controls="nav-{{ i }}" aria-selected="false">{{ i }}</button>
+                {% assign i = i | plus:1 %}
+            {% endfor %}    
+        </div>
+    </nav>
+
     <ul class="nav nav-pills flex-column mb-auto">
-        {% for module in site.data.schedule %}
-            <h4 class="pt-4">{{ module[0] }}</h4>
-            {% for section in module[1] %}
-                {% if section[1].first %}
-                    <b class="pt-2">{{ section[0] }}</b>
-                    {% for subsection in section[1] %}
-                        <li>
-                            <a href="{{ site.baseurl }}{{ subsection[1] }}" class="nav-link text-white">
-                                <i class="fas fa-angle-right" style="padding-right:7px;"></i>
-                                {{ subsection[0] }}
-                            </a>
-                        </li>
+        <div class="tab-content" id="nav-tabContent">
+            {% assign i = 0 %}
+            {% for module in site.data.schedule %}
+                <div class="tab-pane" id="nav-{{ i }}" role="tabpanel" aria-labelledby="nav-{{ i }}-tab">
+                    <h4 class="pt-4">
+                        {{ module[0] }}
+                        <a class="next-angle" href="#"><i onclick="next()" class="fas fa-angle-right fa-pull-right"></i></a>
+                        <a class="prev-angle" href="#"><i onclick="prev()" class="fas fa-angle-left fa-pull-right"></i></a>
+                    </h4>
+                    {% for section in module[1] %}
+                        {% if section[1].first %}
+                            <b class="pt-2">{{ section[0] }}</b>
+                            {% for subsection in section[1] %}
+                                <li>
+                                    <a href="{{ site.baseurl }}{{ subsection[1] }}" class="nav-link text-white">
+                                        <i class="fas fa-angle-right" style="padding-right:7px;"></i>
+                                        {{ subsection[0] }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                                <a href="{{ site.baseurl }}{{ section[1] }}" class="nav-link text-white">
+                                    <i class="fas fa-angle-right" style="padding-right:7px;"></i>
+                                    {{ section[0] }}
+                                </a>
+                            </li>
+                        {% endif %}
                     {% endfor %}
-                {% else %}
-                    <li>
-                        <a href="{{ site.baseurl }}{{ section[1] }}" class="nav-link text-white">
-                            <i class="fas fa-angle-right" style="padding-right:7px;"></i>
-                            {{ section[0] }}
-                        </a>
-                    </li>
-                {% endif %}
+                </div>
+                {% assign i = i | plus:1 %}
             {% endfor %}
-        {% endfor %}
+        </div>
     </ul>
 </div>
