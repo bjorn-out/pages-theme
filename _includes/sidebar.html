@@ -1,0 +1,33 @@
+<div class="col-3 d-flex flex-column p-3 text-white bg-dark min-vh-100">
+    <a href="{{ site.baseurl }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-warning text-decoration-none">
+        <i class="fab fa-python fa-2x" style="padding-left: 5px; padding-right:15px;"></i>
+        <span class="fs-4">{{ site.title }}</span>
+    </a>
+    <hr>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        {% for module in site.data.schedule %}
+            <h4 class="pt-4">{{ module[0] }}</h4>
+            {% for section in module[1] %}
+                {% if section[1].first %}
+                    <b class="pt-2">{{ section[0] }}</b>
+                    {% for subsection in section[1] %}
+                        <li>
+                            <a href="{{ site.baseurl }}{{ subsection[1] }}" class="nav-link text-white">
+                                <i class="fas fa-angle-right" style="padding-right:7px;"></i>
+                                {{ subsection[0] }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li>
+                        <a href="{{ site.baseurl }}{{ section[1] }}" class="nav-link text-white">
+                            <i class="fas fa-angle-right" style="padding-right:7px;"></i>
+                            {{ section[0] }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
